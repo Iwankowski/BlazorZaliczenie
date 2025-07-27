@@ -1,0 +1,144 @@
+@page "/products/add"
+@page "/products/edit/{Id:int}"
+@using BlazorApp2_Iwankowski.Data
+@using BlazorApp2_Iwankowski.Services
+@using Microsoft.AspNetCore.Components
+@rendermode InteractiveServer
+@inject WarehouseService WarehouseService
+@inject StorageLocationService StorageLocationService
+@inject NavigationManager Navigation
+
+<div class="container-fluid py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+                    <h5 class="mb-0">
+                        <i class="bi bi-box-seam me-2"></i>
+                        @(Id.HasValue ? "Edytuj" : "Dodaj") produkt
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    @if (!string.IsNullOrEmpty(error))
+                    {
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <div>@error</div>
+                        </div>
+                    }
+
+                    <EditForm Model="@item" OnValidSubmit="@HandleValidSubmit" class="row g-3">
+                        <DataAnnotationsValidator />
+
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <InputText @bind-Value="item.Name" class="form-control" placeholder="Nazwa produktu" />
+                                <label>Nazwa produktu</label>
+                                <ValidationMessage For="@(() => item.Name)" class="text-danger small" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <InputNumber @bind-Value="item.Quantity" class="form-control" placeholder="Iloœæ" />
+                                <label>Iloœæ</label>
+                                <ValidationMessage For="@(() => item.Quantity)" class="text-danger small" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <InputNumber @bind-Value="item.Price" class="form-control" placeholder="Cena" />
+                                <label>Cena (PLN)</label>
+                                <ValidationMessage For="@(() => item.Price)" class="text-danger small" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <InputSelect @bind-Value="item.StorageLocationId" class="form-select">
+                                    <option value="">-- Wybierz magazyn --</option>
+                                    @if (locations != null)
+                                    {
+                                        @foreach (var location in locations)
+                                        {
+                                            <option value="@location.Id">@location.Name</option>
+                                        }
+                                    }
+                                </InputSelect>
+                                <label>Magazyn</label>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-4">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="bi bi-check-lg me-1"></i> Zapisz
+                            </button>
+                            <button type="button" class="btn btn-outline-secondary" @onclick="Cancel">
+                                <i class="bi bi-x-lg me-1"></i> Anuluj
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+    private WarehouseItem item = new();
+    private List<StorageLocation>? locations;
+    private string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            locations = await StorageLocationService.GetAllAsync();
+
+            if (Id.HasValue)
+            {
+                var existing = await WarehouseService.GetByIdAsync(Id.Value);
+                if (existing != null)
+                {
+                    item = existing;
+                }
+                else
+                {
+                    error = "Nie znaleziono produktu";
+                    Navigation.NavigateTo("products");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            error = "B³¹d podczas ³adowania danych: " + ex.Message;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        try
+        {
+            if (Id.HasValue)
+            {
+                await WarehouseService.UpdateAsync(item);
+            }
+            else
+            {
+                await WarehouseService.AddAsync(item);
+            }
+            Navigation.NavigateTo("products");
+        }
+        catch (Exception ex)
+        {
+            error = "B³¹d podczas zapisywania: " + ex.Message;
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("products");
+    }
+}

@@ -1,0 +1,142 @@
+.page[b-rxftlh4610] {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+
+main[b-rxftlh4610] {
+    flex: 1;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.sidebar[b-rxftlh4610] {
+    background-color: #1a1d20;
+    width: 250px;
+}
+
+.content[b-rxftlh4610] {
+    padding-top: 1.1rem;
+}
+
+#blazor-error-ui[b-rxftlh4610] {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 1050;
+    display: none;
+}
+
+#blazor-error-ui.show[b-rxftlh4610] {
+    display: block;
+}
+
+.page[b-rxftlh4610] {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main[b-rxftlh4610] {
+    flex: 1;
+}
+
+.sidebar[b-rxftlh4610] {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row[b-rxftlh4610] {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row[b-rxftlh4610]  a, .top-row[b-rxftlh4610]  .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+    .top-row[b-rxftlh4610]  a:hover, .top-row[b-rxftlh4610]  .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row[b-rxftlh4610]  a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+@media (max-width: 640.98px) {
+    .top-row[b-rxftlh4610] {
+        justify-content: space-between;
+    }
+
+    .top-row[b-rxftlh4610]  a, .top-row[b-rxftlh4610]  .btn-link {
+        margin-left: 0;
+    }
+
+    .sidebar[b-rxftlh4610] {
+        width: 100%;
+        position: relative;
+    }
+
+    .page[b-rxftlh4610] {
+        flex-direction: column;
+    }
+
+    main[b-rxftlh4610] {
+        min-height: calc(100vh - 56px);
+    }
+}
+
+@media (min-width: 641px) {
+    .page[b-rxftlh4610] {
+        flex-direction: row;
+    }
+
+    .sidebar[b-rxftlh4610] {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row[b-rxftlh4610] {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .top-row.auth[b-rxftlh4610]  a:first-child {
+        flex: 1;
+        text-align: right;
+        width: 0;
+    }
+
+    .top-row[b-rxftlh4610], article[b-rxftlh4610] {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+#blazor-error-ui[b-rxftlh4610] {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss[b-rxftlh4610] {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }

@@ -1,0 +1,19 @@
+﻿@using BlazorApp2_Iwankowski.Components.Pages
+
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)" />
+    </Found>
+    <NotFound>
+        <PageTitle>Nie znaleziono</PageTitle>
+        <LayoutView Layout="@typeof(Layout.MainLayout)">
+            <div class="container mt-4">
+                <div class="alert alert-warning">
+                    <h4><i class="bi bi-exclamation-triangle"></i> Błąd 404</h4>
+                    <p>Przepraszamy, nie znaleziono strony.</p>
+                    <a href="" class="btn btn-primary">Wróć do strony głównej</a>
+                </div>
+            </div>
+        </LayoutView>
+    </NotFound>
+</Router>
